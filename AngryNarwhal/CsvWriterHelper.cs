@@ -5,7 +5,7 @@ namespace AngryNarwhal;
 
 public class CsvWriterHelper
 {
-    public static void WriteUrlsToCsv(List<string> urls, string filePath)
+    public static void WriteUrlRecordsToCsv(List<UrlRecord> results, string filePath)
     {
         using (var writer = new StreamWriter(filePath))
         using (var csv = new CsvWriter(writer, CultureInfo.InvariantCulture))
@@ -13,9 +13,25 @@ public class CsvWriterHelper
             csv.WriteHeader<UrlRecord>();
             csv.NextRecord();
 
-            foreach (var url in urls)
+            foreach (var result in results)
             {
-                csv.WriteRecord(new UrlRecord { Url = url });
+                csv.WriteRecord(result);
+                csv.NextRecord();
+            }
+        }
+    }
+
+    public static void WriteMatchResultsToCsv(List<MatchResult> results, string filePath)
+    {
+        using (var writer = new StreamWriter(filePath))
+        using (var csv = new CsvWriter(writer, CultureInfo.InvariantCulture))
+        {
+            csv.WriteHeader<MatchResult>();
+            csv.NextRecord();
+            
+            foreach (var result in results)
+            {
+                csv.WriteRecord(result);
                 csv.NextRecord();
             }
         }
